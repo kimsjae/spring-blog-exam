@@ -33,7 +33,14 @@ public class BoardController {
     }
 
     @PostMapping("/board/save")
-    public String save(){
+    public String save(BoardRequest.SaveDTO saveDTO, HttpServletRequest request){
+        if (saveDTO.getTitle().length() > 20 || saveDTO.getContent().length() > 20) {
+            request.setAttribute("status", 400);
+            request.setAttribute("msg", "제목과 내용은 20자 이내로 작성하세요.");
+            return "error/40x";
+        }
+
+        boardRepository.save(saveDTO);
         return "redirect:/";
     }
 
@@ -44,6 +51,7 @@ public class BoardController {
 
     @PostMapping("/board/{id}/delete")
     public String delete(@PathVariable int id){
+        boardRepository.delete(id);
         return "redirect:/";
     }
 }

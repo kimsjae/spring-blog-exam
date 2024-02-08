@@ -10,6 +10,7 @@ public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(length = 20)
     private String title;
     private String content;
 }
