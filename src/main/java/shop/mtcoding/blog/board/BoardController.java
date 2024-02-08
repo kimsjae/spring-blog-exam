@@ -43,6 +43,20 @@ public class BoardController {
         boolean last = currentPage+1 == totalPage ? true : false;
         request.setAttribute("last", last);
 
+        int[] selectPage;
+
+        if (remainCount == 0) {
+            selectPage = new int[totalCount/paging];
+        } else {
+            selectPage = new int[totalCount/paging+1];
+        }
+
+        for (int i = 0; i < totalPage; i++) {
+            selectPage[i] = i;
+
+        }
+        request.setAttribute("selectPage", selectPage);
+
         return "index";
     }
 
