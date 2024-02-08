@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -18,16 +20,12 @@ public class BoardController {
     @GetMapping({ "/", "/board" })
     public String index(HttpServletRequest request, @RequestParam(defaultValue = "0") int page) {
         List<Board> boardList = boardRepository.findAll(page);
-        request.setAttribute("boardList", boardList);
 
         int currentPage = page;
         int nextPage = currentPage + 1;
         int prevPage = currentPage - 1;
-        request.setAttribute("nextPage", nextPage);
-        request.setAttribute("prevPage", prevPage);
 
         boolean first = currentPage == 0 ? true : false;
-        request.setAttribute("first", first);
 
         int totalCount = boardRepository.countBoardId();
         int paging = 5;
@@ -35,13 +33,12 @@ public class BoardController {
         int totalPage;
 
         if (remainCount == 0) {
-            totalPage = totalCount/paging;
+            totalPage = totalCount / paging;
         } else {
-            totalPage = totalCount/paging+1;
+            totalPage = totalCount / paging+1;
         }
 
         boolean last = currentPage+1 == totalPage ? true : false;
-        request.setAttribute("last", last);
 
         int[] selectPage;
 
@@ -53,9 +50,24 @@ public class BoardController {
 
         for (int i = 0; i < totalPage; i++) {
             selectPage[i] = i;
-
         }
-        request.setAttribute("selectPage", selectPage);
+
+        Map<String, Object> key = new HashMap<>();
+        key.put("boardList", boardList);
+        key.put("nextPage", nextPage);
+        key.put("prevPage", prevPage);
+        key.put("first", first);
+        key.put("last", last);
+        key.put("selectPage", selectPage);
+
+        request.setAttribute("key", key);
+
+//        request.setAttribute("boardList", boardList);
+//        request.setAttribute("nextPage", nextPage);
+//        request.setAttribute("prevPage", prevPage);
+//        request.setAttribute("first", first);
+//        request.setAttribute("last", last);
+//        request.setAttribute("selectPage", selectPage);
 
         return "index";
     }

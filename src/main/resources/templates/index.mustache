@@ -35,7 +35,8 @@
     </table>
 
     <ul class="pagination d-flex justify-content-center">
-        <li class="page-item {{#first}}disabled{{/first}}"><a class="page-link" href="?page={{prevPage}}">Prev</a></li>
+        <li class="page-item {{#first}}disabled{{/first}}">
+            <a class="page-link" href="?page={{prevPage}}">Prev</a></li>
         {{#selectPage}}
             <li class="page-item">
                 <a class="page-link" href="?page={{.}}">
