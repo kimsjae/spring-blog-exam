@@ -5,3 +5,7 @@ insert into board_tb(title, content) values ('제목4', '내용4');
 insert into board_tb(title, content) values ('제목5', '내용5');
 insert into board_tb(title, content) values ('제목6', '내용6');
 insert into board_tb(title, content) values ('제목7', '내용7');
+insert into board_tb(title, content) values ('제목8', '내용8');
+insert into board_tb(title, content) values ('제목9', '내용9');
+insert into board_tb(title, content) values ('제목10', '내용10');
+insert into board_tb(title, content) values ('제목11', '내용11');

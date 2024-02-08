@@ -16,9 +16,33 @@ public class BoardController {
     private final BoardRepository boardRepository;
 
     @GetMapping({ "/", "/board" })
-    public String index(HttpServletRequest request) {
-        List<Board> boardList = boardRepository.findAll();
+    public String index(HttpServletRequest request, @RequestParam(defaultValue = "0") int page) {
+        List<Board> boardList = boardRepository.findAll(page);
         request.setAttribute("boardList", boardList);
+
+        int currentPage = page;
+        int nextPage = currentPage + 1;
+        int prevPage = currentPage - 1;
+        request.setAttribute("nextPage", nextPage);
+        request.setAttribute("prevPage", prevPage);
+
+        boolean first = currentPage == 0 ? true : false;
+        request.setAttribute("first", first);
+
+        int totalCount = boardRepository.countBoardId();
+        int paging = 5;
+        int remainCount = totalCount % paging;
+        int totalPage;
+
+        if (remainCount == 0) {
+            totalPage = totalCount/paging;
+        } else {
+            totalPage = totalCount/paging+1;
+        }
+
+        boolean last = currentPage+1 == totalPage ? true : false;
+        request.setAttribute("last", last);
+
         return "index";
     }
 
